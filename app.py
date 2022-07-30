@@ -37,12 +37,6 @@ def handle_message(event):
     UID=str(event.source.user_id)
     uprofile=line_bot_api.get_profile(UID)
     name=uprofile.display_name
-    
-    get_message = event.message.text
-
-    # Send To Line
-    reply = TextSendMessage(text=f"{get_message}")
-    line_bot_api.reply_message(event.reply_token, reply)
     if event.message.text== "抽" :
         #name=event.message.text[:-1] #-----------------------
         tmps=""
