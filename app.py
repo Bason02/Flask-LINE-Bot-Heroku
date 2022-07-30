@@ -43,3 +43,13 @@ def handle_message(event):
     # Send To Line
     reply = TextSendMessage(text=f"{get_message}")
     line_bot_api.reply_message(event.reply_token, reply)
+    if event.message.text== "抽" :
+        #name=event.message.text[:-1] #-----------------------
+        tmps=""
+        tmpstr=""
+        for k in range(3):     
+            a=nlist.pop(random.randint(0,len(nlist)-1))
+            tmps+="\n"+a["國名"]+" "+a["code"]+"\n"+"面積："+a["面積"]+"\n"
+            tmpstr+=" "+a["國名"]+"、"     
+        result[UID]=name+"："+tmpstr[:-1]
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=result[UID]+"\n"+tmps))
