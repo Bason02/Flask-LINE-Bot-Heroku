@@ -3,15 +3,20 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 import random
+import os
+from datetime import datetime
 
 app = Flask(__name__)
 token="yELy9B74H0cL0gkv7XWfMTTOXhVVbQCNGzUufb+D5cX3iW28cUgo6lgvA2V7H8Tc58U9QBAxwrSwENcLOgTPYShDj82BRaH9nZvEYVCPt1AgHV7EyoyV54AfYzhieYSO66cWbhSqrvTWt6n+wywI6QdB04t89/1O/w1cDnyilFU="
 ChannelSecrets="6bc6b4178058ab8ccb63ae67fe67385a"
 
+line_bot_api = LineBotApi(os.environ.get(token))
+handler = WebhookHandler(os.environ.get(ChannelSecrets))
+
 handler = WebhookHandler(ChannelSecrets)
 line_bot_api = LineBotApi(token)
 # 收 Line 訊息
-@app.route("/callback", methods=['POST'])
+@app.route("/", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
     body = request.get_data(as_text=True)
@@ -32,7 +37,6 @@ result = {}
 def echo_message(event):
     UID=str(event.source.user_id)
     uprofile=line_bot_api.get_profile(UID)
-    print(uprofile)
     name=uprofile.display_name ###
     if UID in result and event.message.text== "抽" :
         n2="你抽過了！上次抽的結果是"+result[UID]
@@ -73,6 +77,3 @@ def echo_message(event):
         print(t)
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=t["王一"]+"\n"+ttmps))
         
-        
-if __name__ == "__main__":
-    app.run()
