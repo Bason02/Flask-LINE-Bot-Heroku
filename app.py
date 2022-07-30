@@ -4,16 +4,9 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 import random
 
+app = Flask(__name__)
 token="yELy9B74H0cL0gkv7XWfMTTOXhVVbQCNGzUufb+D5cX3iW28cUgo6lgvA2V7H8Tc58U9QBAxwrSwENcLOgTPYShDj82BRaH9nZvEYVCPt1AgHV7EyoyV54AfYzhieYSO66cWbhSqrvTWt6n+wywI6QdB04t89/1O/w1cDnyilFU="
 ChannelSecrets="6bc6b4178058ab8ccb63ae67fe67385a"
-
-app = Flask(__name__)
-@app.route("/")
-def home():
-    return "Hello Flask"
-@app.route("/test")
-def test():
-    return "Hello TEST"
 
 handler = WebhookHandler(ChannelSecrets)
 line_bot_api = LineBotApi(token)
