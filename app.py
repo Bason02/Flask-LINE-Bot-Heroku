@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
-
+result = {}
 nlist=[{"國名":"美國","code":"USA","面積":"平方千米"},{"國名":"英國","code":"BPD","面積":"平方千米"},{"國名":"中國","code":"CHN","面積":"平方千米"},{"國名":"台國","code":"TWC","面積":"平方千米"},{"國名":"紐西蘭","code":"NCL","面積":"平方千米"},{"國名":"日本","code":"JPY","面積":"平方千米"},{"國名":"加國","code":"CAD","面積":"平方千米"}]
 
 @app.route("/", methods=["GET", "POST"])
@@ -34,6 +34,10 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    UID=str(event.source.user_id)
+    uprofile=line_bot_api.get_profile(UID)
+    name=uprofile.display_name
+    
     get_message = event.message.text
 
     # Send To Line
