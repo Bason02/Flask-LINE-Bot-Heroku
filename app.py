@@ -47,3 +47,22 @@ def handle_message(event):
             tmpstr+=" "+a["國名"]+"、"     
         result[UID]=name+"："+tmpstr[:-1]
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=result[UID]+"\n"+tmps))
+    elif "查詢" == event.message.text :
+        ttmp="查詢全部：\n"
+        for a,b in result.items():
+            ttmp+=b+"\n"
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=ttmp))
+       
+        
+    elif event.message.text == "-test":
+        t={}
+        ttmps=""
+        ttmpstr=""
+        for k in range(3):     
+            ta=nlist.pop(random.randint(0,len(nlist)-1))
+            ttmps+="\n"+ta["國名"]+" "+ta["code"]+"\n"+"面積："+ta["面積"]+"\n"
+            ttmpstr+=" "+ta["國名"]+"、"     
+        t["王一"]="王一"+"："+ttmpstr[:-1]
+        print()
+        print(t)
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=t["王一"]+"\n"+ttmps))
